@@ -1,0 +1,6 @@
+tasks.md
+temp
+private
+.vagrant
+*.pyc
+twistd.pid
