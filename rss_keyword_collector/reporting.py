@@ -25,7 +25,6 @@ from twisted.web.client import getPage
 from twisted.python import log
 
 
-
 class ReportingService(service.Service):
 
     def __init__(self, feed_db, interval=600):
@@ -63,7 +62,6 @@ class ReportingService(service.Service):
        # stop the reactor.call
        if self.call:
            self.call.cancel()
-
 
 class ReporterWriter(protocol.ClientFactory):
 
@@ -106,3 +104,18 @@ class ReporterWriter(protocol.ClientFactory):
             return queries[state]
         except KeyError:
             raise ValueError("{0} is not a valid query".format(query))
+
+
+    def set_censored(self, term, state=True):
+        if state == True:
+            censored = "true"
+        elif state == False:
+            censored = "false"
+        else:
+            raise ValueError("state must be a bool value")
+
+        db = self.dbpool.runOperation("UPDATE terms "
+                                      "SET censored = %s, "
+                                      "WHERE term = %s",
+                                      (censored, term))
+        return db
