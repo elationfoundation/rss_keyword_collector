@@ -88,6 +88,7 @@ dependencies() {
     apt_install "libxml2-dev"
     apt_install "libxslt1-dev"
     apt_install "zlib1g-dev"
+    apt_install "libssl-dev"
 
     # Required for polyglot
     apt_install "libicu-dev"
@@ -120,7 +121,7 @@ dependencies() {
 }
 
 get_nltk_libraries() {
-    mkdir -p '/usr/lib/nltk_data'
+    mkdir -p "$nltk_data_dir"
     #python -m nltk.downloader maxent_treebank_pos_tagger
     #python -m nltk.downloader maxent_ne_chunker
     python  -m nltk.downloader punkt -d "$nltk_data_dir"
